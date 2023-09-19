@@ -14,29 +14,28 @@ export default function FSOTR() {
     (volume) => volume.slug === router.query.slug
   );
 
-  useEffect(() => {
-    function getNextVolume() {
-      const currentIndex = volumes.findIndex(
-        (volume) => volume.slug === router.query.slug
-      );
-      const nextIndex = currentIndex + 1;
-      const next = volumes[nextIndex];
-      return next;
-    }
-    function getPrevVolume() {
-      const currentIndex = volumes.findIndex(
-        (volume) => volume.slug === router.query.slug
-      );
-      const prevIndex = currentIndex - 1;
-      const prev = volumes[prevIndex];
-      return prev;
-    }
+  function handleNextVolume() {
+    const currentIndex = volumes.findIndex(
+      (volume) => volume.slug === router.query.slug
+    );
+    const nextIndex = currentIndex + 1;
+    const next = volumes[nextIndex];
+    setNextVolume(next);
+  }
 
-    const nextObject = getNextVolume();
-    const prevObject = getPrevVolume();
-    setNextVolume(nextObject);
-    setPrevVolume(prevObject);
-  }, [router.query.slug]);
+  function handlePrevVolume() {
+    const currentIndex = volumes.findIndex(
+      (volume) => volume.slug === router.query.slug
+    );
+    const prevIndex = currentIndex - 1;
+    const prev = volumes[prevIndex];
+    setPrevVolume(prev);
+  }
+
+  useEffect(() => {
+    handleNextVolume();
+    handlePrevVolume();
+  }, [router.query.slug, handleNextVolume, handlePrevVolume]);
 
   return (
     <>
