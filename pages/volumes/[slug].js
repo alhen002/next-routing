@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import { getVolume, getNextVolume, getPrevVolume } from "@/lib/utils";
+
 import Custom404 from "../404";
 
 export default function VolumeDetail() {
@@ -49,17 +49,17 @@ export default function VolumeDetail() {
               width={140}
               height={230}
             />
+            {volumeState.prev && (
+              <Link href={`/volumes/${volumeState.prev.slug}`}>PREV</Link>
+            )}
+            {volumeState.next && (
+              <Link href={`/volumes/${volumeState.next.slug}`}>NEXT</Link>
+            )}
           </>
         ) : (
           <h1>Volume not found</h1>
         )}
       </>
-      {volumeState?.prev && (
-        <Link href={`/volumes/${volumeState.prev.slug}`}>PREV</Link>
-      )}
-      {volumeState?.next && (
-        <Link href={`/volumes/${volumeState.next.slug}`}>NEXT</Link>
-      )}
     </>
   );
 }
