@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { getVolume, getNextVolume, getPrevVolume } from "@/lib/utils";
+import Custom404 from "../404";
 
 export default function VolumeDetail() {
   const [volumeState, setVolumeState] = useState();
@@ -22,6 +23,10 @@ export default function VolumeDetail() {
     });
   }, [slug]);
 
+  if (!volumeState?.slug) {
+    return <Custom404 />;
+  }
+
   return (
     <>
       <p></p>
@@ -32,7 +37,7 @@ export default function VolumeDetail() {
             <h1>{volumeState.title}</h1>
             <p>{volumeState.description}</p>
             <ul>
-              {volumeState.books?.map((book) => (
+              {volumeState.books.map((book) => (
                 <li key={book.title}>
                   {book.ordinal} - {book.title}
                 </li>
@@ -49,10 +54,10 @@ export default function VolumeDetail() {
           <h1>Volume not found</h1>
         )}
       </>
-      {volumeState.prev && (
+      {volumeState?.prev && (
         <Link href={`/volumes/${volumeState.prev.slug}`}>PREV</Link>
       )}
-      {volumeState.next && (
+      {volumeState?.next && (
         <Link href={`/volumes/${volumeState.next.slug}`}>NEXT</Link>
       )}
     </>
