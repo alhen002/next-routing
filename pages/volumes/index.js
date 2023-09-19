@@ -2,6 +2,8 @@ import Link from "next/link";
 import { introduction, volumes } from "../../lib/data";
 
 export default function Introduction() {
+  const randomVolume = volumes[Math.floor(Math.random() * volumes.length)];
+
   return (
     <>
       <h1>Lord of the Rings</h1>
@@ -16,6 +18,9 @@ export default function Introduction() {
           );
         })}
       </ul>
+      <button>
+        <Link href={`/volumes/${randomVolume.slug}`}>Random</Link>
+      </button>
     </>
   );
 }
